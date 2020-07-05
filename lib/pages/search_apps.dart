@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 
 import 'package:CleanLauncher/model/appData.dart';
-import 'package:CleanLauncher/components/apps_search.dart';
+import 'package:CleanLauncher/components/launcher/apps_search.dart';
 
 class SearchApps extends StatefulWidget {
   List<AppData> apps = List();

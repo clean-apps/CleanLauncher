@@ -1,6 +1,6 @@
-# CleanLauncher
+# Clean Launcher
 
-A new Flutter project.
+A No-Distraction Android Launcher
 
 ## Getting Started
 

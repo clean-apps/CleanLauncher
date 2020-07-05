@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:CleanLauncher/pages/preferences.dart';
 import 'package:CleanLauncher/pages/search_apps.dart';
-import 'package:CleanLauncher/components/apps_list.dart';
+import 'package:CleanLauncher/components/launcher/apps_list.dart';
 
 class LauncherAppList extends StatefulWidget {
   List<AppData> selectedApps = new List();

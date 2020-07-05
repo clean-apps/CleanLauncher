@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:CleanLauncher/styles/DarkTheme.dart';
+import 'package:CleanLauncher/styles/AppThemes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:CleanLauncher/pages/setup_welcome.dart';
 import 'package:CleanLauncher/pages/launcher_app_list.dart';
