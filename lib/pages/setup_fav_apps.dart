@@ -46,6 +46,7 @@ class _SetupFavAppsState extends State<SetupFavApps> {
       includeSystemApps: true,
       includeAppIcons: false,
     );
+    apps.sort((a, b) => a.appName.compareTo(b.appName));
     return apps;
   }
 

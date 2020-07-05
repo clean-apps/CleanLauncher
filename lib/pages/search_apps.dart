@@ -24,6 +24,7 @@ class _SearchAppsState extends State<SearchApps> {
       includeSystemApps: true,
       includeAppIcons: false,
     ).then((value) => {
+          value.sort((a, b) => a.appName.compareTo(b.appName)),
           setState(() {
             widget.apps = value
                 .map(

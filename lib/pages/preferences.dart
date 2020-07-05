@@ -3,7 +3,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:CleanLauncher/pages/setup_fav_apps.dart';
 
-class Preferences extends StatelessWidget {
+class Preferences extends StatefulWidget {
+  @override
+  _PreferencesState createState() => _PreferencesState();
+}
+
+class _PreferencesState extends State<Preferences> {
+  void _useLightTheme() {
+    setState(() {
+      SharedPreferences.getInstance().then(
+        (prefs) => prefs.setBool("use_light_theme", true),
+      );
+    });
+  }
+
+  void _useDarkTheme() {
+    setState(() {
+      SharedPreferences.getInstance().then(
+        (prefs) => prefs.setBool("use_light_theme", false),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +45,14 @@ class Preferences extends StatelessWidget {
           ),
           SwitchListTile(
             title: Text('Use Dark Theme'),
-            value: true,
-            onChanged: (val) {},
+            value: Theme.of(context).brightness == Brightness.dark,
+            onChanged: (val) {
+              if (val) {
+                _useDarkTheme();
+              } else {
+                _useLightTheme();
+              }
+            },
           ),
           SwitchListTile(
             title: Text('Use TODO List'),
