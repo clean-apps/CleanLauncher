@@ -4,50 +4,32 @@ import 'package:device_apps/device_apps.dart';
 import 'package:CleanLauncher/model/appData.dart';
 import 'package:CleanLauncher/components/launcher/apps_search.dart';
 
-class SearchApps extends StatefulWidget {
-  List<AppData> apps = List();
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/favorites.dart';
 
-  @override
-  _SearchAppsState createState() => _SearchAppsState();
-}
+final Favorites favorites = StoreBuilder.favorites();
 
-class _SearchAppsState extends State<SearchApps> {
-  @override
-  void initState() {
-    super.initState();
-    _getAppList();
-  }
-
-  void _getAppList() {
-    DeviceApps.getInstalledApplications(
-      onlyAppsWithLaunchIntent: true,
-      includeSystemApps: true,
-      includeAppIcons: false,
-    ).then((value) => {
-          value.sort((a, b) => a.appName.compareTo(b.appName)),
-          setState(() {
-            widget.apps = value
-                .map(
-                  (e) => AppData(
-                    appName: e.appName,
-                    packageName: e.packageName,
-                  ),
-                )
-                .toList();
-          })
-        });
-  }
-
+class SearchApps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return widget.apps.length > 0
-        ? Scaffold(
-            appBar: AppBar(
-              title: Text('Search Applications'),
-              elevation: 0.0,
-            ),
-            body: AppsSearchWidget(widget.apps),
-          )
-        : Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Search Applications'),
+        elevation: 0.0,
+      ),
+      body: Observer(
+        builder: (_) => AppsSearchWidget(
+          favorites.allApps
+              .map(
+                (e) => AppData(
+                  appName: e.appName,
+                  packageName: e.packageName,
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
   }
 }

@@ -4,7 +4,7 @@ import 'package:device_apps/device_apps.dart';
 
 class SelectAppsWidget extends StatelessWidget {
   //
-  final Future<List<Application>> allApps;
+  final List<Application> allApps;
   final List<AppData> selectedApps;
   Function(Application) onSelected;
   Function(Application) onUnselected;
@@ -24,38 +24,31 @@ class SelectAppsWidget extends StatelessWidget {
         .copyWith(color: Theme.of(context).textTheme.caption.color);
     var normalTheme = Theme.of(context).textTheme.headline3;
 
-    return FutureBuilder(
-      builder: (context, projectSnap) {
-        return projectSnap.data == null
-            ? Container()
-            : ListView.builder(
-                itemCount: projectSnap.data.length,
-                itemBuilder: (context, index) {
-                  Application appData = projectSnap.data[index];
-                  bool isSelected = this
-                          .selectedApps
-                          .where((element) =>
-                              element.packageName == appData.packageName)
-                          .length >
-                      0;
-                  return FlatButton(
-                    onPressed: () {
-                      isSelected ? onUnselected(appData) : onSelected(appData);
-                    },
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        appData.appName,
-                        softWrap: false,
-                        overflow: TextOverflow.fade,
-                        style: isSelected ? selectedTheme : normalTheme,
-                      ),
-                    ),
-                  );
-                },
-              );
+    return ListView.builder(
+      itemCount: this.allApps.length,
+      itemBuilder: (context, index) {
+        Application appData = this.allApps[index];
+        bool isSelected = this
+                .selectedApps
+                .where((element) => element.packageName == appData.packageName)
+                .length >
+            0;
+        return FlatButton(
+          onPressed: () {
+            isSelected ? onUnselected(appData) : onSelected(appData);
+          },
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              appData.appName,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+              style: isSelected ? selectedTheme : normalTheme,
+            ),
+          ),
+        );
       },
-      future: this.allApps,
     );
+    ;
   }
 }

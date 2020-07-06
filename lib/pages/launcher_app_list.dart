@@ -1,15 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:CleanLauncher/model/appData.dart';
 import 'package:device_apps/device_apps.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:CleanLauncher/model/appData.dart';
+
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/favorites.dart';
 
 import 'package:CleanLauncher/pages/preferences.dart';
 import 'package:CleanLauncher/pages/search_apps.dart';
 import 'package:CleanLauncher/components/launcher/apps_list.dart';
 
+final Favorites favorites = StoreBuilder.favorites();
+
 class LauncherAppList extends StatefulWidget {
-  List<AppData> selectedApps = new List();
   AppData highlighted = null;
 
   @override
@@ -17,16 +20,6 @@ class LauncherAppList extends StatefulWidget {
 }
 
 class _LauncherAppListState extends State<LauncherAppList> {
-  void _decodeFavorites(String jsonData) {
-    setState(() {
-      widget.selectedApps = List<dynamic>.from(jsonDecode(jsonData))
-          .map(
-            (model) => AppData.fromJson(model),
-          )
-          .toList();
-    });
-  }
-
   void _onSettings() {
     Navigator.push(
       context,
@@ -80,65 +73,32 @@ class _LauncherAppListState extends State<LauncherAppList> {
           content: _getRenameField(),
           actions: <Widget>[
             OutlineButton(
-                borderSide: BorderSide(color: highlightColor),
-                child: Text(
-                  "DONE",
-                  style: TextStyle(color: highlightColor),
-                ),
-                onPressed: () {
-                  setState(() {
-                    widget.selectedApps
-                        .where(
-                          (ele) =>
-                              ele.packageName == widget.highlighted.packageName,
-                        )
-                        .first
-                        .appName = widget.highlighted.appName;
-                    //
-                    String jsonSelectedApps = jsonEncode(widget.selectedApps);
-                    SharedPreferences.getInstance().then(
-                      (prefs) => {
-                        prefs.setString('favorites', jsonSelectedApps),
-                        widget.highlighted = null
-                      },
-                    );
-                    //
-                    widget.highlighted = null;
-                    Navigator.of(context, rootNavigator: true).pop();
-                  });
-                })
+              borderSide: BorderSide(color: highlightColor),
+              child: Text(
+                "DONE",
+                style: TextStyle(color: highlightColor),
+              ),
+              onPressed: () => favorites.rename(widget.highlighted).then(
+                    (_) => {
+                      setState(() {
+                        widget.highlighted = null;
+                        Navigator.of(
+                          context,
+                          rootNavigator: true,
+                        ).pop();
+                      })
+                    },
+                  ),
+            )
           ],
         ),
       );
     }
   }
 
-  void _onRemoveApp() {
-    if (widget.highlighted != null) {
-      setState(() {
-        widget.selectedApps.removeWhere(
-          (element) => element.packageName == widget.highlighted.packageName,
-        );
-        //
-        String jsonSelectedApps = jsonEncode(widget.selectedApps);
-        SharedPreferences.getInstance().then(
-          (prefs) => {
-            prefs.setString('favorites', jsonSelectedApps),
-            widget.highlighted = null
-          },
-        );
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Color highlightColor = Theme.of(context).textTheme.caption.color;
-    if (widget.selectedApps.length == 0) {
-      SharedPreferences.getInstance().then(
-        (prefs) => _decodeFavorites(prefs.getString("favorites")),
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -167,26 +127,31 @@ class _LauncherAppListState extends State<LauncherAppList> {
                     Icons.launch,
                     color: highlightColor,
                   ),
-                  onPressed: () {
-                    DeviceApps.openApp(widget.highlighted.packageName);
-                  },
+                  onPressed: () =>
+                      DeviceApps.openApp(widget.highlighted.packageName),
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.edit,
                     color: highlightColor,
                   ),
-                  onPressed: () {
-                    _onRename(context);
-                  },
+                  onPressed: () => _onRename(context),
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.delete_outline,
                     color: highlightColor,
                   ),
-                  onPressed: () {
-                    _onRemoveApp();
+                  onPressed: () => {
+                    setState(() {
+                      favorites.remove(widget.highlighted).then(
+                            (_) => {
+                              setState(() {
+                                widget.highlighted = null;
+                              })
+                            },
+                          );
+                    }),
                   },
                 )
               ],
@@ -194,7 +159,10 @@ class _LauncherAppListState extends State<LauncherAppList> {
       ),
       body: Stack(
         children: <Widget>[
-          AppsListWidget(widget.selectedApps, widget.highlighted, _onHighlight),
+          Observer(
+            builder: (_) => AppsListWidget(
+                favorites.apps, widget.highlighted, _onHighlight),
+          ),
           Positioned(
             child: new Align(
               alignment: Alignment.bottomLeft,

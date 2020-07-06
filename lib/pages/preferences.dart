@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:CleanLauncher/pages/setup_fav_apps.dart';
 
-class Preferences extends StatefulWidget {
-  @override
-  _PreferencesState createState() => _PreferencesState();
-}
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/settings.dart';
 
-class _PreferencesState extends State<Preferences> {
-  void _useLightTheme() {
-    setState(() {
-      SharedPreferences.getInstance().then(
-        (prefs) => prefs.setBool("use_light_theme", true),
-      );
-    });
-  }
+final Settings settings = StoreBuilder.settings();
 
-  void _useDarkTheme() {
-    setState(() {
-      SharedPreferences.getInstance().then(
-        (prefs) => prefs.setBool("use_light_theme", false),
-      );
-    });
-  }
-
+class Preferences extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,16 +27,12 @@ class _PreferencesState extends State<Preferences> {
               );
             },
           ),
-          SwitchListTile(
-            title: Text('Use Dark Theme'),
-            value: Theme.of(context).brightness == Brightness.dark,
-            onChanged: (val) {
-              if (val) {
-                _useDarkTheme();
-              } else {
-                _useLightTheme();
-              }
-            },
+          Observer(
+            builder: (_) => SwitchListTile(
+              title: Text('Use Light Theme'),
+              value: settings.useLightTheme,
+              onChanged: (lightMode) => settings.setTheme(lightMode),
+            ),
           ),
           SwitchListTile(
             title: Text('Use TODO List'),

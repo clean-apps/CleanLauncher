@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:CleanLauncher/styles/AppThemes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:CleanLauncher/pages/setup_welcome.dart';
 import 'package:CleanLauncher/pages/launcher_app_list.dart';
+
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/settings.dart';
+import 'package:CleanLauncher/stores/setup.dart';
+import 'package:CleanLauncher/stores/favorites.dart';
+
+final Settings settings = StoreBuilder.settings();
+final Setup setup = StoreBuilder.setup();
+final Favorites favorites = StoreBuilder.favorites();
 
 void main() {
   runApp(LauncherApp());
 }
 
 class LauncherApp extends StatefulWidget {
-  bool isLoadingDone = false;
-  bool isSetupDone = false;
-  SharedPreferences prefs;
   //
   @override
   _LauncherAppState createState() => _LauncherAppState();
@@ -21,42 +28,20 @@ class _LauncherAppState extends State<LauncherApp> {
   @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then(
-      (prefs) => {
-        widget.prefs = prefs,
-        _init(),
-      },
-    );
-  }
-
-  void _init() {
-    if (widget.prefs.containsKey("favorites") &&
-        widget.prefs.getString("favorites") != "[]") {
-      setState(() => {
-            widget.isLoadingDone = true,
-            widget.isSetupDone = true,
-          });
-    } else {
-      setState(() => {
-            widget.isLoadingDone = true,
-            widget.isSetupDone = false,
-          });
-    }
-  }
-
-  bool _useLightTheme() {
-    return widget.prefs != null &&
-        widget.prefs.containsKey("use_light_theme") &&
-        widget.prefs.getBool("use_light_theme");
+    settings.initStore();
+    setup.initStore();
+    favorites.initStore();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: _useLightTheme() ? lightTheme : darkTheme,
-      home: widget.isLoadingDone
-          ? (widget.isSetupDone ? LauncherAppList() : SetupWelcome())
-          : Container(),
+    return Observer(
+      builder: (_) => MaterialApp(
+        theme: settings.useLightTheme ? lightTheme : darkTheme,
+        home: setup.isLoadingDone
+            ? (setup.isSetupDone ? LauncherAppList() : SetupWelcome())
+            : Container(),
+      ),
     );
   }
 }
