@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:CleanLauncher/pages/setup_favorites.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/settings.dart';

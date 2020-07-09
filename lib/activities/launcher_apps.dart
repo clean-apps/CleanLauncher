@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/favorites.dart';
 
-import 'package:CleanLauncher/components/launcher/apps_list.dart';
+import 'package:CleanLauncher/widgets/launcher/apps_list.dart';
 
 final Favorites favorites = StoreBuilder.favorites();
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:CleanLauncher/components/setup/welcome.dart';
+import 'package:CleanLauncher/widgets/setup/welcome.dart';
 
 class SetupWelcome extends StatelessWidget {
   @override
