@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:CleanLauncher/styles/AppThemes.dart';
 
 import 'package:CleanLauncher/pages/setup_welcome.dart';
-import 'package:CleanLauncher/pages/launcher_app_list.dart';
+import 'package:CleanLauncher/pages/launcher_apps.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
@@ -39,7 +39,7 @@ class _LauncherAppState extends State<LauncherApp> {
       builder: (_) => MaterialApp(
         theme: settings.useLightTheme ? lightTheme : darkTheme,
         home: setup.isLoadingDone
-            ? (setup.isSetupDone ? LauncherAppList() : SetupWelcome())
+            ? (setup.isSetupDone ? LauncherApps() : SetupWelcome())
             : Container(),
       ),
     );

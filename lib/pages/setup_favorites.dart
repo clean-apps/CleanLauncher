@@ -3,7 +3,7 @@ import 'package:device_apps/device_apps.dart';
 import 'package:CleanLauncher/model/appData.dart';
 import 'package:CleanLauncher/components/setup/select_apps.dart';
 
-import 'package:CleanLauncher/pages/launcher_app_list.dart';
+import 'package:CleanLauncher/pages/launcher_apps.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
@@ -11,13 +11,13 @@ import 'package:CleanLauncher/stores/favorites.dart';
 
 final Favorites favorites = StoreBuilder.favorites();
 
-class SetupFavApps extends StatefulWidget {
+class SetupFavorites extends StatefulWidget {
   int selected = 0;
   @override
-  _SetupFavAppsState createState() => _SetupFavAppsState();
+  _SetupFavoritesState createState() => _SetupFavoritesState();
 }
 
-class _SetupFavAppsState extends State<SetupFavApps> {
+class _SetupFavoritesState extends State<SetupFavorites> {
   selectApplication(Application selected) {
     favorites
         .add(AppData(
@@ -39,10 +39,7 @@ class _SetupFavAppsState extends State<SetupFavApps> {
   }
 
   doNext() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LauncherAppList()),
-    );
+    Navigator.pushNamed(context, '/launcherApps');
   }
 
   @override
@@ -56,12 +53,7 @@ class _SetupFavAppsState extends State<SetupFavApps> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Favorite Apps', style: appTitleStyle),
-        actions: <Widget>[
-          Text(
-            favorites.apps.length > 0 ? favorites.apps.length.toString() : '',
-            style: appActionStyle,
-          )
-        ],
+        actions: <Widget>[Text(favorites.countStr, style: appActionStyle)],
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
@@ -73,11 +65,13 @@ class _SetupFavAppsState extends State<SetupFavApps> {
           unselectApplication,
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => doNext(),
-        label: Text('NEXT'),
-        icon: Icon(Icons.keyboard_arrow_right),
-      ),
+      floatingActionButton: favorites.count > 0
+          ? FloatingActionButton.extended(
+              onPressed: () => doNext(),
+              label: Text('NEXT'),
+              icon: Icon(Icons.keyboard_arrow_right),
+            )
+          : Container(),
     );
   }
 }

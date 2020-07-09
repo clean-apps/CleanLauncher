@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:CleanLauncher/pages/setup_fav_apps.dart';
+import 'package:CleanLauncher/pages/setup_favorites.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
@@ -20,12 +20,7 @@ class Preferences extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text('Select Favorite Apps'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SetupFavApps()),
-              );
-            },
+            onTap: () => Navigator.pushNamed(context, '/favorites'),
           ),
           Observer(
             builder: (_) => SwitchListTile(

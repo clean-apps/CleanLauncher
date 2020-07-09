@@ -6,33 +6,21 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/favorites.dart';
 
-import 'package:CleanLauncher/pages/preferences.dart';
-import 'package:CleanLauncher/pages/search_apps.dart';
 import 'package:CleanLauncher/components/launcher/apps_list.dart';
 
 final Favorites favorites = StoreBuilder.favorites();
 
-class LauncherAppList extends StatefulWidget {
+class LauncherApps extends StatefulWidget {
   AppData highlighted = null;
 
   @override
-  _LauncherAppListState createState() => _LauncherAppListState();
+  _LauncherAppsState createState() => _LauncherAppsState();
 }
 
-class _LauncherAppListState extends State<LauncherAppList> {
-  void _onSettings() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Preferences()),
-    );
-  }
-
-  void _onSearch() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SearchApps()),
-    );
-  }
+class _LauncherAppsState extends State<LauncherApps> {
+  //
+  void _onSettings() => Navigator.pushNamed(context, '/preferences');
+  void _onSearch() => Navigator.pushNamed(context, '/search');
 
   void _onHighlight(AppData appData) {
     setState(() {
@@ -161,7 +149,10 @@ class _LauncherAppListState extends State<LauncherAppList> {
         children: <Widget>[
           Observer(
             builder: (_) => AppsListWidget(
-                favorites.apps, widget.highlighted, _onHighlight),
+              favorites.apps,
+              widget.highlighted,
+              _onHighlight,
+            ),
           ),
           Positioned(
             child: new Align(
