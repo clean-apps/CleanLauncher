@@ -1,4 +1,5 @@
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/models/taskdata.dart';
 import 'package:CleanLauncher/widgets/launcher/todo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -110,7 +111,10 @@ class TodoListWidget extends StatelessWidget {
         elevation: 0.0,
       ),
       body: Observer(
-        builder: (_) => ListView.separated(
+        builder: (_) => ReorderableListView(
+          children: <Widget>[
+            for (TaskData task in tasksStore.tasks) {TodoItemWidget(task)}
+          ],
           itemCount: tasksStore.count,
           itemBuilder: (_, index) => TodoItemWidget(
             tasksStore.getTask(index),
