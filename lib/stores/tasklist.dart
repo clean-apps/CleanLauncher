@@ -39,14 +39,11 @@ abstract class _TaskList with Store {
                 .toList(),
           );
     }
-
-    //reaction((_) => tasks, (tasks) => save());
   }
 
   @action
   Future<void> save() async {
     String jsonTasks = jsonEncode(this.tasks);
-    debugPrint(jsonTasks);
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     return await _prefs.setString(sfTasks, jsonTasks);
   }
@@ -101,6 +98,15 @@ abstract class _TaskList with Store {
   @action
   Future<void> toggleTask(int index) async {
     this.tasks[index].toggle();
+    await save();
+  }
+
+  @action
+  Future<void> switchItems(int oldIndex, int newIndex) async {
+    TaskData item1 = getTask(oldIndex);
+    TaskData item2 = getTask(newIndex);
+    this.tasks[oldIndex] = item2;
+    this.tasks[newIndex] = item1;
     await save();
   }
 }

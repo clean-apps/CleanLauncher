@@ -90,6 +90,14 @@ mixin _$TaskList on _TaskList, Store {
     return _$toggleTaskAsyncAction.run(() => super.toggleTask(index));
   }
 
+  final _$switchItemsAsyncAction = AsyncAction('switchItems');
+
+  @override
+  Future<void> switchItems(int oldIndex, int newIndex) {
+    return _$switchItemsAsyncAction
+        .run(() => super.switchItems(oldIndex, newIndex));
+  }
+
   final _$_TaskListActionController = ActionController(name: '_TaskList');
 
   @override

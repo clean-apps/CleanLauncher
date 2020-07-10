@@ -99,9 +99,6 @@ class TodoListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme _textTheme = Theme.of(context).textTheme;
-    Color normalColor = _textTheme.headline3.color;
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -112,16 +109,14 @@ class TodoListWidget extends StatelessWidget {
       ),
       body: Observer(
         builder: (_) => ReorderableListView(
+          onReorder: (oldIdx, newIdx) => tasksStore.switchItems(oldIdx, newIdx),
           children: <Widget>[
-            for (TaskData task in tasksStore.tasks) {TodoItemWidget(task)}
+            for (TaskData task in tasksStore.tasks)
+              ListTile(
+                key: Key(task.description),
+                title: TodoItemWidget(task),
+              )
           ],
-          itemCount: tasksStore.count,
-          itemBuilder: (_, index) => TodoItemWidget(
-            tasksStore.getTask(index),
-          ),
-          separatorBuilder: (_, index) => Divider(
-            color: normalColor.withOpacity(0.5),
-          ),
         ),
       ),
       floatingActionButton: _fab(context),
