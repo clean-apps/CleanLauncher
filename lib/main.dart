@@ -1,3 +1,4 @@
+import 'package:CleanLauncher/stores/tasklist.dart';
 import 'package:flutter/material.dart';
 import 'package:CleanLauncher/styles/AppThemes.dart';
 
@@ -16,6 +17,7 @@ import 'package:CleanLauncher/stores/favorites.dart';
 final Settings settings = StoreBuilder.settings();
 final Setup setup = StoreBuilder.setup();
 final Favorites favorites = StoreBuilder.favorites();
+final TaskList tasks = StoreBuilder.tasks();
 
 void main() {
   runApp(LauncherApp());
@@ -34,6 +36,7 @@ class _LauncherAppState extends State<LauncherApp> {
     settings.initStore();
     setup.initStore();
     favorites.initStore();
+    tasks.initStore();
   }
 
   Widget _getHomeWidget() {

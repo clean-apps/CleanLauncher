@@ -31,21 +31,21 @@ mixin _$TaskList on _TaskList, Store {
     }, _$tasksAtom, name: '${_$tasksAtom.name}_set');
   }
 
-  final _$addTaskShownAtom = Atom(name: '_TaskList.addTaskShown');
+  final _$showNewTaskPanelAtom = Atom(name: '_TaskList.showNewTaskPanel');
 
   @override
-  bool get addTaskShown {
-    _$addTaskShownAtom.context.enforceReadPolicy(_$addTaskShownAtom);
-    _$addTaskShownAtom.reportObserved();
-    return super.addTaskShown;
+  bool get showNewTaskPanel {
+    _$showNewTaskPanelAtom.context.enforceReadPolicy(_$showNewTaskPanelAtom);
+    _$showNewTaskPanelAtom.reportObserved();
+    return super.showNewTaskPanel;
   }
 
   @override
-  set addTaskShown(bool value) {
-    _$addTaskShownAtom.context.conditionallyRunInAction(() {
-      super.addTaskShown = value;
-      _$addTaskShownAtom.reportChanged();
-    }, _$addTaskShownAtom, name: '${_$addTaskShownAtom.name}_set');
+  set showNewTaskPanel(bool value) {
+    _$showNewTaskPanelAtom.context.conditionallyRunInAction(() {
+      super.showNewTaskPanel = value;
+      _$showNewTaskPanelAtom.reportChanged();
+    }, _$showNewTaskPanelAtom, name: '${_$showNewTaskPanelAtom.name}_set');
   }
 
   final _$initStoreAsyncAction = AsyncAction('initStore');
@@ -91,16 +91,6 @@ mixin _$TaskList on _TaskList, Store {
   }
 
   final _$_TaskListActionController = ActionController(name: '_TaskList');
-
-  @override
-  void showAddTaskPanel(bool isShown) {
-    final _$actionInfo = _$_TaskListActionController.startAction();
-    try {
-      return super.showAddTaskPanel(isShown);
-    } finally {
-      _$_TaskListActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   bool contains(String name) {

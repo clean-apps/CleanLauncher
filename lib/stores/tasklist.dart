@@ -16,15 +16,17 @@ abstract class _TaskList with Store {
   List<TaskData> tasks = ObservableList();
 
   @observable
-  bool addTaskShown = false;
+  bool showNewTaskPanel = false;
+
+  final String TASKS = 'tasks';
 
   @action
   Future<void> initStore() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
-    if (_prefs.containsKey("tasks") && _prefs.getString("tasks") != "[]") {
+    if (_prefs.containsKey(TASKS) && _prefs.getString(TASKS) != "[]") {
       //
-      String jsonData = _prefs.getString("tasks");
+      String jsonData = _prefs.getString(TASKS);
       this.tasks.clear();
       this.tasks.addAll(
             List<dynamic>.from(jsonDecode(jsonData))
@@ -42,16 +44,11 @@ abstract class _TaskList with Store {
   }
 
   @action
-  void showAddTaskPanel(bool isShown) {
-    this.addTaskShown = isShown;
-  }
-
-  @action
   Future<void> save() async {
     String jsonTasks = jsonEncode(this.tasks);
     debugPrint(jsonTasks);
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return await _prefs.setString('tasks', jsonTasks);
+    return await _prefs.setString(TASKS, jsonTasks);
   }
 
   @action
