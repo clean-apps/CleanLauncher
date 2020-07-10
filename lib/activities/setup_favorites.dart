@@ -42,6 +42,7 @@ class _SetupFavoritesState extends State<SetupFavorites> {
 
   @override
   Widget build(BuildContext context) {
+    Color highlightColor = Theme.of(context).textTheme.caption.color;
     TextStyle appTitleStyle = Theme.of(context).textTheme.headline5;
     TextStyle appActionStyle = Theme.of(context)
         .textTheme
@@ -66,8 +67,8 @@ class _SetupFavoritesState extends State<SetupFavorites> {
       floatingActionButton: favorites.count > 0
           ? FloatingActionButton.extended(
               onPressed: () => doNext(),
-              label: Text('NEXT'),
-              icon: Icon(Icons.keyboard_arrow_right),
+              label: Text('NEXT', style: TextStyle(color: highlightColor)),
+              icon: Icon(Icons.keyboard_arrow_right, color: highlightColor),
             )
           : Container(),
     );

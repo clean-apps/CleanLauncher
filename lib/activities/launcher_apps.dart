@@ -158,10 +158,8 @@ class _LauncherAppsState extends State<LauncherApps> {
             child: new Align(
               alignment: Alignment.bottomLeft,
               child: IconButton(
-                onPressed: () {
-                  _onSettings();
-                },
-                icon: Icon(Icons.settings),
+                onPressed: () => _onSettings(),
+                icon: Icon(Icons.settings, color: highlightColor),
               ),
             ),
           ),
@@ -169,10 +167,8 @@ class _LauncherAppsState extends State<LauncherApps> {
             child: new Align(
               alignment: Alignment.bottomRight,
               child: IconButton(
-                onPressed: () {
-                  _onSearch();
-                },
-                icon: Icon(Icons.search),
+                onPressed: () => _onSearch(),
+                icon: Icon(Icons.search, color: highlightColor),
               ),
             ),
           )
