@@ -11,12 +11,10 @@ import 'package:CleanLauncher/activities/setup_favorites.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/settings.dart';
-import 'package:CleanLauncher/stores/setup.dart';
-import 'package:CleanLauncher/stores/favorites.dart';
+import 'package:CleanLauncher/stores/applist.dart';
 
 final Settings settings = StoreBuilder.settings();
-final Setup setup = StoreBuilder.setup();
-final Favorites favorites = StoreBuilder.favorites();
+final AppList appList = StoreBuilder.favorites();
 final TaskList tasks = StoreBuilder.tasks();
 
 void main() {
@@ -34,14 +32,13 @@ class _LauncherAppState extends State<LauncherApp> {
   void initState() {
     super.initState();
     settings.initStore();
-    setup.initStore();
-    favorites.initStore();
+    appList.initStore();
     tasks.initStore();
   }
 
   Widget _getHomeWidget() {
-    return setup.isLoadingDone
-        ? (setup.isSetupDone ? Launcher() : SetupWelcome())
+    return appList.isLoadingDone
+        ? (appList.isSetupDone ? Launcher() : SetupWelcome())
         : Container();
   }
 

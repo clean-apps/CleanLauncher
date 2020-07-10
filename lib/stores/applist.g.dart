@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'favorites.dart';
+part of 'applist.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,7 +8,7 @@ part of 'favorites.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$Favorites on _Favorites, Store {
+mixin _$AppList on _AppList, Store {
   Computed<int> _$countComputed;
 
   @override
@@ -31,7 +31,7 @@ mixin _$Favorites on _Favorites, Store {
           Computed<AppData>(() => super.highlightedApp))
       .value;
 
-  final _$appsAtom = Atom(name: '_Favorites.apps');
+  final _$appsAtom = Atom(name: '_AppList.apps');
 
   @override
   List<AppData> get apps {
@@ -48,7 +48,7 @@ mixin _$Favorites on _Favorites, Store {
     }, _$appsAtom, name: '${_$appsAtom.name}_set');
   }
 
-  final _$allAppsAtom = Atom(name: '_Favorites.allApps');
+  final _$allAppsAtom = Atom(name: '_AppList.allApps');
 
   @override
   List<AppData> get allApps {
@@ -65,7 +65,7 @@ mixin _$Favorites on _Favorites, Store {
     }, _$allAppsAtom, name: '${_$allAppsAtom.name}_set');
   }
 
-  final _$highlightedIndexAtom = Atom(name: '_Favorites.highlightedIndex');
+  final _$highlightedIndexAtom = Atom(name: '_AppList.highlightedIndex');
 
   @override
   int get highlightedIndex {
@@ -80,6 +80,40 @@ mixin _$Favorites on _Favorites, Store {
       super.highlightedIndex = value;
       _$highlightedIndexAtom.reportChanged();
     }, _$highlightedIndexAtom, name: '${_$highlightedIndexAtom.name}_set');
+  }
+
+  final _$isLoadingDoneAtom = Atom(name: '_AppList.isLoadingDone');
+
+  @override
+  bool get isLoadingDone {
+    _$isLoadingDoneAtom.context.enforceReadPolicy(_$isLoadingDoneAtom);
+    _$isLoadingDoneAtom.reportObserved();
+    return super.isLoadingDone;
+  }
+
+  @override
+  set isLoadingDone(bool value) {
+    _$isLoadingDoneAtom.context.conditionallyRunInAction(() {
+      super.isLoadingDone = value;
+      _$isLoadingDoneAtom.reportChanged();
+    }, _$isLoadingDoneAtom, name: '${_$isLoadingDoneAtom.name}_set');
+  }
+
+  final _$isSetupDoneAtom = Atom(name: '_AppList.isSetupDone');
+
+  @override
+  bool get isSetupDone {
+    _$isSetupDoneAtom.context.enforceReadPolicy(_$isSetupDoneAtom);
+    _$isSetupDoneAtom.reportObserved();
+    return super.isSetupDone;
+  }
+
+  @override
+  set isSetupDone(bool value) {
+    _$isSetupDoneAtom.context.conditionallyRunInAction(() {
+      super.isSetupDone = value;
+      _$isSetupDoneAtom.reportChanged();
+    }, _$isSetupDoneAtom, name: '${_$isSetupDoneAtom.name}_set');
   }
 
   final _$initStoreAsyncAction = AsyncAction('initStore');
@@ -125,25 +159,25 @@ mixin _$Favorites on _Favorites, Store {
         .run(() => super.renameHighlighted(newName));
   }
 
-  final _$_FavoritesActionController = ActionController(name: '_Favorites');
+  final _$_AppListActionController = ActionController(name: '_AppList');
 
   @override
   void select(int index) {
-    final _$actionInfo = _$_FavoritesActionController.startAction();
+    final _$actionInfo = _$_AppListActionController.startAction();
     try {
       return super.select(index);
     } finally {
-      _$_FavoritesActionController.endAction(_$actionInfo);
+      _$_AppListActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void deselect() {
-    final _$actionInfo = _$_FavoritesActionController.startAction();
+    final _$actionInfo = _$_AppListActionController.startAction();
     try {
       return super.deselect();
     } finally {
-      _$_FavoritesActionController.endAction(_$actionInfo);
+      _$_AppListActionController.endAction(_$actionInfo);
     }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:CleanLauncher/model/appData.dart';
-import 'package:device_apps/device_apps.dart';
+import 'package:CleanLauncher/stores/models/appData.dart';
 
 class SelectAppsWidget extends StatelessWidget {
   //
@@ -49,6 +48,5 @@ class SelectAppsWidget extends StatelessWidget {
         );
       },
     );
-    ;
   }
 }

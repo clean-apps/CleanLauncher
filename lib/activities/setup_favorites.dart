@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:CleanLauncher/model/appData.dart';
+import 'package:CleanLauncher/stores/models/appData.dart';
 import 'package:CleanLauncher/widgets/setup/select_apps.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
-import 'package:CleanLauncher/stores/favorites.dart';
+import 'package:CleanLauncher/stores/applist.dart';
 
-final Favorites favorites = StoreBuilder.favorites();
+final AppList appList = StoreBuilder.favorites();
 
 class SetupFavorites extends StatefulWidget {
   int selected = 0;
@@ -16,11 +16,11 @@ class SetupFavorites extends StatefulWidget {
 
 class _SetupFavoritesState extends State<SetupFavorites> {
   selectApplication(AppData selected) {
-    favorites.add(selected).then((_) => setState(() => widget.selected++));
+    appList.add(selected).then((_) => setState(() => widget.selected++));
   }
 
   unselectApplication(AppData unselected) {
-    favorites.remove(unselected).then((_) => setState(
+    appList.remove(unselected).then((_) => setState(
           () => widget.selected--,
         ));
   }
@@ -41,19 +41,19 @@ class _SetupFavoritesState extends State<SetupFavorites> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Favorite Apps', style: appTitleStyle),
-        actions: <Widget>[Text(favorites.countStr, style: appActionStyle)],
+        actions: <Widget>[Text(appList.countStr, style: appActionStyle)],
         automaticallyImplyLeading: false,
         elevation: 0.0,
       ),
       body: Observer(
         builder: (_) => SelectAppsWidget(
-          favorites.allApps,
-          favorites.apps,
+          appList.allApps,
+          appList.apps,
           selectApplication,
           unselectApplication,
         ),
       ),
-      floatingActionButton: favorites.count > 0
+      floatingActionButton: appList.count > 0
           ? FloatingActionButton.extended(
               onPressed: () => doNext(),
               label: Text('NEXT', style: TextStyle(color: highlightColor)),

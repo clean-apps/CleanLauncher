@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:CleanLauncher/model/appData.dart';
 import 'package:CleanLauncher/widgets/launcher/apps_search.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
-import 'package:CleanLauncher/stores/favorites.dart';
+import 'package:CleanLauncher/stores/applist.dart';
 
-final Favorites favorites = StoreBuilder.favorites();
+final AppList appList = StoreBuilder.favorites();
 
 class SearchApps extends StatelessWidget {
   @override
@@ -18,16 +17,7 @@ class SearchApps extends StatelessWidget {
         elevation: 0.0,
       ),
       body: Observer(
-        builder: (_) => AppsSearchWidget(
-          favorites.allApps
-              .map(
-                (e) => AppData(
-                  appName: e.appName,
-                  packageName: e.packageName,
-                ),
-              )
-              .toList(),
-        ),
+        builder: (_) => AppsSearchWidget(appList.allApps),
       ),
     );
   }

@@ -1,12 +1,12 @@
-import 'package:CleanLauncher/model/appData.dart';
+import 'package:CleanLauncher/stores/models/appData.dart';
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
-import 'package:CleanLauncher/stores/favorites.dart';
+import 'package:CleanLauncher/stores/applist.dart';
 
-final Favorites favorites = StoreBuilder.favorites();
+final AppList appList = StoreBuilder.favorites();
 
 class AppsListWidget extends StatelessWidget {
   //
@@ -20,10 +20,10 @@ class AppsListWidget extends StatelessWidget {
     );
     return TextField(
       controller: TextEditingController(
-        text: favorites.highlightedApp.appName,
+        text: appList.highlightedApp.appName,
       ),
       autofocus: true,
-      onChanged: (value) => favorites.renameHighlighted(value),
+      onChanged: (value) => appList.renameHighlighted(value),
       decoration: InputDecoration(
         border: inputBorder,
         focusedBorder: inputBorder,
@@ -37,7 +37,7 @@ class AppsListWidget extends StatelessWidget {
 
   void _onRename(BuildContext context) {
     Color highlightColor = Theme.of(context).textTheme.caption.color;
-    if (favorites.isHighlighted) {
+    if (appList.isHighlighted) {
       showDialog(
         context: context,
         child: AlertDialog(
@@ -49,9 +49,9 @@ class AppsListWidget extends StatelessWidget {
                 "DONE",
                 style: TextStyle(color: highlightColor),
               ),
-              onPressed: () => favorites.rename(favorites.highlightedApp).then(
+              onPressed: () => appList.rename(appList.highlightedApp).then(
                     (_) => {
-                      favorites.deselect(),
+                      appList.deselect(),
                       Navigator.of(context, rootNavigator: true).pop(),
                     },
                   ),
@@ -70,8 +70,7 @@ class AppsListWidget extends StatelessWidget {
           Icons.launch,
           color: highlightColor,
         ),
-        onPressed: () =>
-            DeviceApps.openApp(favorites.highlightedApp.packageName),
+        onPressed: () => DeviceApps.openApp(appList.highlightedApp.packageName),
       ),
       IconButton(
         icon: Icon(
@@ -85,8 +84,8 @@ class AppsListWidget extends StatelessWidget {
           Icons.delete_outline,
           color: highlightColor,
         ),
-        onPressed: () => favorites.remove(favorites.highlightedApp).then(
-              (_) => favorites.deselect(),
+        onPressed: () => appList.remove(appList.highlightedApp).then(
+              (_) => appList.deselect(),
             ),
       )
     ];
@@ -124,13 +123,13 @@ class AppsListWidget extends StatelessWidget {
 
     return Observer(
       builder: (_) => ListView.builder(
-        itemCount: favorites.count,
+        itemCount: appList.count,
         itemBuilder: (context, index) {
-          AppData appData = favorites.apps[index];
+          AppData appData = appList.apps[index];
           return FlatButton(
             onPressed: () => DeviceApps.openApp(appData.packageName),
             onLongPress: () {
-              favorites.highlightedIndex = index;
+              appList.highlightedIndex = index;
             },
             child: Align(
               alignment: Alignment.centerLeft,
@@ -139,7 +138,7 @@ class AppsListWidget extends StatelessWidget {
                 softWrap: false,
                 overflow: TextOverflow.fade,
                 style: Theme.of(context).textTheme.headline3.copyWith(
-                    color: favorites.highlightedIndex == index
+                    color: appList.highlightedIndex == index
                         ? highlightColor
                         : normalColor),
               ),
@@ -157,16 +156,16 @@ class AppsListWidget extends StatelessWidget {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          leading: favorites.isHighlighted
+          leading: appList.isHighlighted
               ? IconButton(
                   icon: Icon(
                     Icons.chevron_left,
                     color: highlightColor,
                   ),
-                  onPressed: () => favorites.deselect(),
+                  onPressed: () => appList.deselect(),
                 )
               : Container(),
-          actions: favorites.isHighlighted ? _actionsHighlighted(context) : [],
+          actions: appList.isHighlighted ? _actionsHighlighted(context) : [],
           elevation: 0.0,
         ),
         body: Stack(

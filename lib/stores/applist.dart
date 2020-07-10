@@ -2,16 +2,16 @@ import 'package:mobx/mobx.dart';
 import 'dart:convert';
 import 'package:device_apps/device_apps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:CleanLauncher/model/appData.dart';
+import 'package:CleanLauncher/stores/models/appData.dart';
 
 // Use Generater Below
 //> flutter packages pub run build_runner watch --delete-conflicting-outputs
 //> flutter packages pub run build_runner build
-part 'favorites.g.dart';
+part 'applist.g.dart';
 
-class Favorites = _Favorites with _$Favorites;
+class AppList = _AppList with _$AppList;
 
-abstract class _Favorites with Store {
+abstract class _AppList with Store {
   @observable
   List<AppData> apps = ObservableList();
 
@@ -20,6 +20,12 @@ abstract class _Favorites with Store {
 
   @observable
   int highlightedIndex = -1;
+
+  @observable
+  bool isLoadingDone = false;
+
+  @observable
+  bool isSetupDone = false;
 
   @action
   Future<void> initStore() async {
@@ -55,6 +61,15 @@ abstract class _Favorites with Store {
                 .map((model) => AppData.fromJson(model))
                 .toList(),
           );
+      //
+      isLoadingDone = true;
+      isSetupDone = true;
+      //
+    } else {
+      //
+      isLoadingDone = true;
+      isSetupDone = false;
+      //
     }
   }
 
