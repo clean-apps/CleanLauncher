@@ -4,10 +4,10 @@ import 'package:device_apps/device_apps.dart';
 
 class SelectAppsWidget extends StatelessWidget {
   //
-  final List<Application> allApps;
+  final List<AppData> allApps;
   final List<AppData> selectedApps;
-  Function(Application) onSelected;
-  Function(Application) onUnselected;
+  Function(AppData) onSelected;
+  Function(AppData) onUnselected;
   //
   SelectAppsWidget(
     this.allApps,
@@ -27,7 +27,7 @@ class SelectAppsWidget extends StatelessWidget {
     return ListView.builder(
       itemCount: this.allApps.length,
       itemBuilder: (context, index) {
-        Application appData = this.allApps[index];
+        AppData appData = this.allApps[index];
         bool isSelected = this
                 .selectedApps
                 .where((element) => element.packageName == appData.packageName)

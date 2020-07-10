@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:device_apps/device_apps.dart';
 import 'package:CleanLauncher/model/appData.dart';
 import 'package:CleanLauncher/widgets/setup/select_apps.dart';
 
@@ -16,24 +15,14 @@ class SetupFavorites extends StatefulWidget {
 }
 
 class _SetupFavoritesState extends State<SetupFavorites> {
-  selectApplication(Application selected) {
-    favorites
-        .add(AppData(
-          appName: selected.appName,
-          packageName: selected.packageName,
-        ))
-        .then((_) => setState(() => widget.selected++));
+  selectApplication(AppData selected) {
+    favorites.add(selected).then((_) => setState(() => widget.selected++));
   }
 
-  unselectApplication(Application unselected) {
-    favorites
-        .remove(AppData(
-          appName: unselected.appName,
-          packageName: unselected.packageName,
-        ))
-        .then((_) => setState(
-              () => widget.selected--,
-            ));
+  unselectApplication(AppData unselected) {
+    favorites.remove(unselected).then((_) => setState(
+          () => widget.selected--,
+        ));
   }
 
   doNext() {

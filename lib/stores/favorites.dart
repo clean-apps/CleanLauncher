@@ -13,29 +13,48 @@ class Favorites = _Favorites with _$Favorites;
 
 abstract class _Favorites with Store {
   @observable
-  List<AppData> apps = List();
+  List<AppData> apps = ObservableList();
 
   @observable
-  List<Application> allApps = List();
+  List<AppData> allApps = ObservableList();
+
+  @observable
+  int highlightedIndex = -1;
 
   @action
   Future<void> initStore() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
-    this.allApps = await DeviceApps.getInstalledApplications(
+    List<Application> deviceApps = await DeviceApps.getInstalledApplications(
       onlyAppsWithLaunchIntent: true,
       includeSystemApps: true,
       includeAppIcons: false,
     );
+
+    this.allApps.clear();
+    this.allApps.addAll(
+          deviceApps
+              .map(
+                (app) => AppData(
+                  appName: app.appName,
+                  packageName: app.packageName,
+                ),
+              )
+              .toList(),
+        );
+
     this.allApps.sort((a, b) => a.appName.compareTo(b.appName));
 
     if (_prefs.containsKey("favorites") &&
         _prefs.getString("favorites") != "[]") {
       //
       String jsonData = _prefs.getString("favorites");
-      this.apps = List<dynamic>.from(jsonDecode(jsonData))
-          .map((model) => AppData.fromJson(model))
-          .toList();
+      this.apps.clear();
+      this.apps.addAll(
+            List<dynamic>.from(jsonDecode(jsonData))
+                .map((model) => AppData.fromJson(model))
+                .toList(),
+          );
     }
   }
 
@@ -60,6 +79,13 @@ abstract class _Favorites with Store {
             .where((ele) => ele.packageName == pApp.packageName)
             .length >
         0;
+  }
+
+  @action
+  void select(int index) {
+    if (index <= this.apps.length) {
+      this.highlightedIndex = index;
+    }
   }
 
   @action
@@ -94,13 +120,28 @@ abstract class _Favorites with Store {
     }
   }
 
+  @action
+  Future<void> renameHighlighted(String newName) async {
+    if (newName != null) {
+      highlightedApp.appName = newName;
+      await save(this.apps);
+    }
+  }
+
+  @action
+  void deselect() {
+    this.highlightedIndex = -1;
+  }
+
   @computed
   int get count => this.apps.length;
 
   @computed
-  int get count_all => this.allApps.length;
+  String get countStr => this.count > 0 ? this.count.toString() : '';
 
   @computed
-  String get countStr =>
-      this.apps.length > 0 ? this.apps.length.toString() : '';
+  bool get isHighlighted => highlightedIndex >= 0;
+
+  @computed
+  AppData get highlightedApp => this.apps[highlightedIndex];
 }
