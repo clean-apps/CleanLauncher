@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
-import 'package:CleanLauncher/stores/models/appData.dart';
+import 'package:CleanLauncher/stores/models/appdata.dart';
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 
 class AppsSearchWidget extends StatefulWidget {

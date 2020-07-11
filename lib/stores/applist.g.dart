@@ -116,6 +116,23 @@ mixin _$AppList on _AppList, Store {
     }, _$isSetupDoneAtom, name: '${_$isSetupDoneAtom.name}_set');
   }
 
+  final _$showEditNamePanelAtom = Atom(name: '_AppList.showEditNamePanel');
+
+  @override
+  bool get showEditNamePanel {
+    _$showEditNamePanelAtom.context.enforceReadPolicy(_$showEditNamePanelAtom);
+    _$showEditNamePanelAtom.reportObserved();
+    return super.showEditNamePanel;
+  }
+
+  @override
+  set showEditNamePanel(bool value) {
+    _$showEditNamePanelAtom.context.conditionallyRunInAction(() {
+      super.showEditNamePanel = value;
+      _$showEditNamePanelAtom.reportChanged();
+    }, _$showEditNamePanelAtom, name: '${_$showEditNamePanelAtom.name}_set');
+  }
+
   final _$initStoreAsyncAction = AsyncAction('initStore');
 
   @override

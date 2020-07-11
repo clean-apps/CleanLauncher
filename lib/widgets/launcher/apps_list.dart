@@ -1,4 +1,4 @@
-import 'package:CleanLauncher/stores/models/appData.dart';
+import 'package:CleanLauncher/stores/models/appdata.dart';
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 
@@ -10,56 +10,48 @@ final AppList appList = StoreBuilder.favorites();
 
 class AppsListWidget extends StatelessWidget {
   //
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _onSettings(context) => Navigator.pushNamed(context, '/preferences');
   void _onSearch(context) => Navigator.pushNamed(context, '/search');
 
-  TextField _getRenameField(BuildContext context) {
-    Color normalColor = Theme.of(context).textTheme.headline3.color;
-    OutlineInputBorder inputBorder = OutlineInputBorder(
-      borderSide: new BorderSide(color: normalColor),
-    );
-    return TextField(
-      controller: TextEditingController(
-        text: appList.highlightedApp.appName,
+  Widget _editTaskPanel(BuildContext context, AppData appData) {
+    TextTheme _textTheme = Theme.of(context).textTheme;
+    Color inputBg = _textTheme.headline3.color.withOpacity(0.15);
+
+    return Container(
+      height: 50,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: inputBg,
+        borderRadius: BorderRadius.circular(10),
       ),
-      autofocus: true,
-      onChanged: (value) => appList.renameHighlighted(value),
-      decoration: InputDecoration(
-        border: inputBorder,
-        focusedBorder: inputBorder,
-        disabledBorder: inputBorder,
-        enabledBorder: inputBorder,
-        labelText: "Rename",
-        labelStyle: TextStyle(color: normalColor),
+      child: Observer(
+        builder: (_) => TextField(
+          onSubmitted: (value) => {
+            appList.renameHighlighted(value),
+            appList.deselect(),
+            onClosedPressed(context),
+          },
+          controller: TextEditingController(text: appData.appName),
+          autofocus: true,
+        ),
       ),
     );
   }
 
+  onClosedPressed(context) {
+    appList.showEditNamePanel = false;
+    Navigator.pop(context);
+  }
+
   void _onRename(BuildContext context) {
-    Color highlightColor = Theme.of(context).textTheme.caption.color;
-    if (appList.isHighlighted) {
-      showDialog(
-        context: context,
-        child: AlertDialog(
-          content: _getRenameField(context),
-          actions: <Widget>[
-            OutlineButton(
-              borderSide: BorderSide(color: highlightColor),
-              child: Text(
-                "DONE",
-                style: TextStyle(color: highlightColor),
-              ),
-              onPressed: () => appList.rename(appList.highlightedApp).then(
-                    (_) => {
-                      appList.deselect(),
-                      Navigator.of(context, rootNavigator: true).pop(),
-                    },
-                  ),
-            )
-          ],
-        ),
-      );
-    }
+    appList.showEditNamePanel = true;
+    scaffoldKey.currentState.showBottomSheet(
+      (bsContext) => _editTaskPanel(bsContext, appList.highlightedApp),
+    );
   }
 
   _actionsHighlighted(BuildContext context) {
@@ -133,14 +125,16 @@ class AppsListWidget extends StatelessWidget {
             },
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                appData.appName,
-                softWrap: false,
-                overflow: TextOverflow.fade,
-                style: Theme.of(context).textTheme.headline3.copyWith(
-                    color: appList.highlightedIndex == index
-                        ? highlightColor
-                        : normalColor),
+              child: Observer(
+                builder: (_) => Text(
+                  appData.appName,
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
+                  style: Theme.of(context).textTheme.headline3.copyWith(
+                      color: appList.highlightedIndex == index
+                          ? highlightColor
+                          : normalColor),
+                ),
               ),
             ),
           );
@@ -155,6 +149,7 @@ class AppsListWidget extends StatelessWidget {
 
     return Observer(
       builder: (_) => Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           leading: appList.isHighlighted
               ? IconButton(

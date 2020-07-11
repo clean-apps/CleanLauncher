@@ -8,7 +8,6 @@ final tasksStore = StoreBuilder.tasks();
 
 class TodoListWidget extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  PersistentBottomSheetController _bsController;
 
   Widget _title(BuildContext context) {
     TextTheme _textTheme = Theme.of(context).textTheme;
@@ -91,24 +90,21 @@ class TodoListWidget extends StatelessWidget {
 
   onAddPressed(context) {
     tasksStore.showNewTaskPanel = true;
-    _bsController = scaffoldKey.currentState.showBottomSheet(
+    scaffoldKey.currentState.showBottomSheet(
       (bsContext) => _newTaskPanel(bsContext),
     );
   }
 
   onEditPressed(BuildContext context, TaskData task) {
     tasksStore.showNewTaskPanel = true;
-    _bsController = scaffoldKey.currentState.showBottomSheet(
+    scaffoldKey.currentState.showBottomSheet(
       (bsContext) => _editTaskPanel(bsContext, task),
     );
   }
 
   onClosedPressed(context) {
     tasksStore.showNewTaskPanel = false;
-    if (_bsController != null)
-      _bsController.close();
-    else
-      Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   Observer _fab(BuildContext context) {

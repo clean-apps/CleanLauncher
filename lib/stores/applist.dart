@@ -2,7 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'dart:convert';
 import 'package:device_apps/device_apps.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:CleanLauncher/stores/models/appData.dart';
+import 'package:CleanLauncher/stores/models/appdata.dart';
 
 // Use Generater Below
 //> flutter packages pub run build_runner watch --delete-conflicting-outputs
@@ -26,6 +26,9 @@ abstract class _AppList with Store {
 
   @observable
   bool isSetupDone = false;
+
+  @observable
+  bool showEditNamePanel = false;
 
   @action
   Future<void> initStore() async {
@@ -58,9 +61,15 @@ abstract class _AppList with Store {
       this.apps.clear();
       this.apps.addAll(
             List<dynamic>.from(jsonDecode(jsonData))
-                .map((model) => AppData.fromJson(model))
+                .map(
+                  (json) => AppData(
+                    appName: json['appName'],
+                    packageName: json['packageName'],
+                  ),
+                )
                 .toList(),
           );
+
       //
       isLoadingDone = true;
       isSetupDone = true;

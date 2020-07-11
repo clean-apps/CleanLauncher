@@ -1,4 +1,4 @@
-import 'package:CleanLauncher/stores/models/appData.dart';
+import 'package:CleanLauncher/stores/models/appdata.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';

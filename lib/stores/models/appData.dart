@@ -1,14 +1,25 @@
-class AppData {
+import 'package:mobx/mobx.dart';
+
+// Use Generater Below
+//> flutter packages pub run build_runner watch --delete-conflicting-outputs
+//> flutter packages pub run build_runner build
+part 'appdata.g.dart';
+
+class AppData = _AppData with _$AppData;
+
+abstract class _AppData with Store {
+  @observable
   String appName;
+
+  @observable
   String packageName;
 
-  AppData({this.appName, this.packageName});
+  _AppData({this.appName, this.packageName});
 
-  static AppData fromJson(json) {
-    AppData appData = new AppData();
-    appData.appName = json['appName'];
-    appData.packageName = json['packageName'];
-    return appData;
+  @action
+  fromJson(json) {
+    this.appName = json['appName'];
+    this.packageName = json['packageName'];
   }
 
   Map toJson() => {
