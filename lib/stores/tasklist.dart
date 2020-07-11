@@ -81,6 +81,18 @@ abstract class _TaskList with Store {
   }
 
   @action
+  Future<void> edit(String oldDesc, String desc) async {
+    if (contains(oldDesc)) {
+      this.tasks.where((ele) => ele.description == oldDesc).forEach(
+        (ele) {
+          ele.description = desc;
+        },
+      );
+      await save();
+    }
+  }
+
+  @action
   Future<void> remove(String desc) async {
     if (contains(desc)) {
       this.tasks.removeWhere((ele) => ele.description == desc);
@@ -101,17 +113,17 @@ abstract class _TaskList with Store {
   }
 
   @action
-  Future<void> switchItems(int oldIndex, int newIndex) async {
-    TaskData item1 = getTask(oldIndex);
-    TaskData item2 = getTask(newIndex);
-    this.tasks[oldIndex] = item2;
-    this.tasks[newIndex] = item1;
-    await save();
-  }
-
-  @action
   Future<void> reset() async {
     this.tasks.clear();
     await this.save();
+  }
+
+  @action
+  Future<void> switchItems(int oldIndex, int newIndex) async {
+    TaskData item1 = this.tasks[oldIndex];
+    TaskData item2 = this.tasks[newIndex];
+    this.tasks[oldIndex] = item2;
+    this.tasks[newIndex] = item1;
+    await save();
   }
 }

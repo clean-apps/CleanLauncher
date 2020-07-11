@@ -25,20 +25,26 @@ class Preferences extends StatelessWidget {
             title: Text('Select Favorite Apps'),
             onTap: () => Navigator.pushNamed(context, '/favorites'),
           ),
+          ListTile(
+            title: Text('Reorder Favorites'),
+            onTap: () => Navigator.pushNamed(context, '/reorder'),
+          ),
           Observer(
             builder: (_) => SwitchListTile(
-              title: Text('Use Light Theme'),
-              value: settings.useLightTheme,
+              title: Text('Use Dark Theme'),
+              value: !settings.useLightTheme,
               onChanged: (lightMode) => settings.setTheme(lightMode),
             ),
           ),
-          SwitchListTile(
-            title: Text('Use TODO List'),
-            value: false,
-            onChanged: (val) {},
+          Observer(
+            builder: (_) => SwitchListTile(
+              title: Text('Use TODO List'),
+              value: settings.useTodoList,
+              onChanged: (useTodo) => settings.setTodoUsage(useTodo),
+            ),
           ),
           ListTile(
-            title: Text('Reset'),
+            title: Text('Reset All Data'),
             onTap: () async => {
               await applist.reset(),
               await tasklist.reset(),

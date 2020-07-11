@@ -26,6 +26,23 @@ mixin _$Settings on _Settings, Store {
     }, _$useLightThemeAtom, name: '${_$useLightThemeAtom.name}_set');
   }
 
+  final _$useTodoListAtom = Atom(name: '_Settings.useTodoList');
+
+  @override
+  bool get useTodoList {
+    _$useTodoListAtom.context.enforceReadPolicy(_$useTodoListAtom);
+    _$useTodoListAtom.reportObserved();
+    return super.useTodoList;
+  }
+
+  @override
+  set useTodoList(bool value) {
+    _$useTodoListAtom.context.conditionallyRunInAction(() {
+      super.useTodoList = value;
+      _$useTodoListAtom.reportChanged();
+    }, _$useTodoListAtom, name: '${_$useTodoListAtom.name}_set');
+  }
+
   final _$initStoreAsyncAction = AsyncAction('initStore');
 
   @override
@@ -38,5 +55,12 @@ mixin _$Settings on _Settings, Store {
   @override
   Future<void> setTheme(bool lightMode) {
     return _$setThemeAsyncAction.run(() => super.setTheme(lightMode));
+  }
+
+  final _$setTodoUsageAsyncAction = AsyncAction('setTodoUsage');
+
+  @override
+  Future<void> setTodoUsage(bool useTodo) {
+    return _$setTodoUsageAsyncAction.run(() => super.setTodoUsage(useTodo));
   }
 }

@@ -149,6 +149,15 @@ abstract class _AppList with Store {
   }
 
   @action
+  Future<void> switchItems(int oldIndex, int newIndex) async {
+    AppData item1 = this.apps[oldIndex];
+    AppData item2 = this.apps[newIndex];
+    this.apps[oldIndex] = item2;
+    this.apps[newIndex] = item1;
+    await save(this.apps);
+  }
+
+  @action
   Future<void> reset() async {
     this.apps.clear();
     await this.save(this.apps);

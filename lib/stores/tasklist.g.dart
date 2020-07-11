@@ -69,6 +69,13 @@ mixin _$TaskList on _TaskList, Store {
     return _$addAsyncAction.run(() => super.add(desc));
   }
 
+  final _$editAsyncAction = AsyncAction('edit');
+
+  @override
+  Future<void> edit(String oldDesc, String desc) {
+    return _$editAsyncAction.run(() => super.edit(oldDesc, desc));
+  }
+
   final _$removeAsyncAction = AsyncAction('remove');
 
   @override
@@ -90,19 +97,19 @@ mixin _$TaskList on _TaskList, Store {
     return _$toggleTaskAsyncAction.run(() => super.toggleTask(index));
   }
 
+  final _$resetAsyncAction = AsyncAction('reset');
+
+  @override
+  Future<void> reset() {
+    return _$resetAsyncAction.run(() => super.reset());
+  }
+
   final _$switchItemsAsyncAction = AsyncAction('switchItems');
 
   @override
   Future<void> switchItems(int oldIndex, int newIndex) {
     return _$switchItemsAsyncAction
         .run(() => super.switchItems(oldIndex, newIndex));
-  }
-
-  final _$resetAsyncAction = AsyncAction('reset');
-
-  @override
-  Future<void> reset() {
-    return _$resetAsyncAction.run(() => super.reset());
   }
 
   final _$_TaskListActionController = ActionController(name: '_TaskList');

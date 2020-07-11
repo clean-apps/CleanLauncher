@@ -159,6 +159,14 @@ mixin _$AppList on _AppList, Store {
         .run(() => super.renameHighlighted(newName));
   }
 
+  final _$switchItemsAsyncAction = AsyncAction('switchItems');
+
+  @override
+  Future<void> switchItems(int oldIndex, int newIndex) {
+    return _$switchItemsAsyncAction
+        .run(() => super.switchItems(oldIndex, newIndex));
+  }
+
   final _$resetAsyncAction = AsyncAction('reset');
 
   @override

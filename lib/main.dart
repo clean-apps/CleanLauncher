@@ -1,4 +1,3 @@
-import 'package:CleanLauncher/stores/tasklist.dart';
 import 'package:flutter/material.dart';
 import 'package:CleanLauncher/styles/AppThemes.dart';
 
@@ -7,11 +6,13 @@ import 'package:CleanLauncher/activities/launcher.dart';
 import 'package:CleanLauncher/activities/preferences.dart';
 import 'package:CleanLauncher/activities/search_apps.dart';
 import 'package:CleanLauncher/activities/setup_favorites.dart';
+import 'package:CleanLauncher/activities/reorder_favorites.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/settings.dart';
 import 'package:CleanLauncher/stores/applist.dart';
+import 'package:CleanLauncher/stores/tasklist.dart';
 
 final Settings settings = StoreBuilder.settings();
 final AppList appList = StoreBuilder.favorites();
@@ -53,6 +54,7 @@ class _LauncherAppState extends State<LauncherApp> {
           "/setup": (context) => SetupWelcome(),
           "/favorites": (context) => SetupFavorites(),
           "/preferences": (context) => Preferences(),
+          "/reorder": (context) => ReorderFavorites(),
           "/search": (context) => SearchApps(),
         },
       ),

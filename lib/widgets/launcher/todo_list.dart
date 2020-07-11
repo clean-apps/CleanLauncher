@@ -38,8 +38,8 @@ class TodoListWidget extends StatelessWidget {
   }
 
   Widget _newTaskPanel(BuildContext context) {
-    Color inputBg =
-        Theme.of(context).textTheme.headline3.color.withOpacity(0.15);
+    TextTheme _textTheme = Theme.of(context).textTheme;
+    Color inputBg = _textTheme.headline3.color.withOpacity(0.15);
 
     return Container(
       height: 50,
@@ -63,10 +63,43 @@ class TodoListWidget extends StatelessWidget {
     );
   }
 
+  Widget _editTaskPanel(BuildContext context, TaskData task) {
+    TextTheme _textTheme = Theme.of(context).textTheme;
+    Color inputBg = _textTheme.headline3.color.withOpacity(0.15);
+
+    return Container(
+      height: 50,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: inputBg,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Observer(
+        builder: (_) => TextField(
+          onSubmitted: (value) => {
+            tasksStore.edit(task.description, value),
+            onClosedPressed(context),
+          },
+          controller: TextEditingController(text: task.description),
+          autofocus: true,
+        ),
+      ),
+    );
+  }
+
   onAddPressed(context) {
     tasksStore.showNewTaskPanel = true;
     _bsController = scaffoldKey.currentState.showBottomSheet(
       (bsContext) => _newTaskPanel(bsContext),
+    );
+  }
+
+  onEditPressed(BuildContext context, TaskData task) {
+    tasksStore.showNewTaskPanel = true;
+    _bsController = scaffoldKey.currentState.showBottomSheet(
+      (bsContext) => _editTaskPanel(bsContext, task),
     );
   }
 
@@ -114,7 +147,7 @@ class TodoListWidget extends StatelessWidget {
             for (TaskData task in tasksStore.tasks)
               ListTile(
                 key: Key(task.description),
-                title: TodoItemWidget(task),
+                title: TodoItemWidget(task, onEditPressed),
               )
           ],
         ),
