@@ -4,8 +4,7 @@ import 'package:CleanLauncher/stores/models/appData.dart';
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
 
 class AppsSearchWidget extends StatefulWidget {
-  List<AppData> apps;
-
+  final List<AppData> apps;
   AppsSearchWidget(this.apps);
 
   @override
