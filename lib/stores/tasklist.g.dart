@@ -98,6 +98,13 @@ mixin _$TaskList on _TaskList, Store {
         .run(() => super.switchItems(oldIndex, newIndex));
   }
 
+  final _$resetAsyncAction = AsyncAction('reset');
+
+  @override
+  Future<void> reset() {
+    return _$resetAsyncAction.run(() => super.reset());
+  }
+
   final _$_TaskListActionController = ActionController(name: '_TaskList');
 
   @override

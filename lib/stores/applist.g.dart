@@ -159,6 +159,13 @@ mixin _$AppList on _AppList, Store {
         .run(() => super.renameHighlighted(newName));
   }
 
+  final _$resetAsyncAction = AsyncAction('reset');
+
+  @override
+  Future<void> reset() {
+    return _$resetAsyncAction.run(() => super.reset());
+  }
+
   final _$_AppListActionController = ActionController(name: '_AppList');
 
   @override

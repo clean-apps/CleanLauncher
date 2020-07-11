@@ -14,6 +14,7 @@ dependencies:
   alphabet_list_scroll_view: ^1.0.6
   mobx: ^0.3.8
   flutter_mobx: ^0.3.3
+  flutter_svg: ^0.17.1
   flutter:
     sdk: flutter
 
@@ -25,3 +26,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/feather.svg
+    - assets/feather_black.svg

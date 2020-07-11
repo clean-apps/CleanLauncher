@@ -4,7 +4,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/settings.dart';
 
+import 'package:CleanLauncher/stores/applist.dart';
+import 'package:CleanLauncher/stores/tasklist.dart';
+
 final Settings settings = StoreBuilder.settings();
+final AppList applist = StoreBuilder.favorites();
+final TaskList tasklist = StoreBuilder.tasks();
 
 class Preferences extends StatelessWidget {
   @override
@@ -31,6 +36,14 @@ class Preferences extends StatelessWidget {
             title: Text('Use TODO List'),
             value: false,
             onChanged: (val) {},
+          ),
+          ListTile(
+            title: Text('Reset'),
+            onTap: () async => {
+              await applist.reset(),
+              await tasklist.reset(),
+              Navigator.pushNamed(context, '/favorites'),
+            },
           ),
           ListTile(
             title: Text('Select Another Launcher'),

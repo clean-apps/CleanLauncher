@@ -148,6 +148,12 @@ abstract class _AppList with Store {
     this.highlightedIndex = -1;
   }
 
+  @action
+  Future<void> reset() async {
+    this.apps.clear();
+    await this.save(this.apps);
+  }
+
   @computed
   int get count => this.apps.length;
 

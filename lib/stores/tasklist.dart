@@ -108,4 +108,10 @@ abstract class _TaskList with Store {
     this.tasks[newIndex] = item1;
     await save();
   }
+
+  @action
+  Future<void> reset() async {
+    this.tasks.clear();
+    await this.save();
+  }
 }
