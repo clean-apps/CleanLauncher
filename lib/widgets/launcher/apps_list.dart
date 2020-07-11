@@ -32,7 +32,6 @@ class AppsListWidget extends StatelessWidget {
         builder: (_) => TextField(
           onSubmitted: (value) => {
             appList.renameHighlighted(value),
-            appList.deselect(),
             onClosedPressed(context),
           },
           controller: TextEditingController(text: appData.appName),
@@ -44,6 +43,7 @@ class AppsListWidget extends StatelessWidget {
 
   onClosedPressed(context) {
     appList.showEditNamePanel = false;
+    appList.deselect();
     Navigator.pop(context);
   }
 
@@ -143,6 +143,23 @@ class AppsListWidget extends StatelessWidget {
     );
   }
 
+  Observer _fab(BuildContext context) {
+    Color highlightColor = Theme.of(context).textTheme.caption.color;
+
+    return Observer(
+      builder: (_) => appList.showEditNamePanel
+          ? FloatingActionButton.extended(
+              onPressed: () => onClosedPressed(context),
+              label: Text(
+                'CLOSE',
+                style: TextStyle(color: highlightColor),
+              ),
+              icon: Icon(Icons.close, color: highlightColor),
+            )
+          : Container(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Color highlightColor = Theme.of(context).textTheme.caption.color;
@@ -170,6 +187,7 @@ class AppsListWidget extends StatelessWidget {
             _searchButton(context)
           ],
         ),
+        floatingActionButton: _fab(context),
       ),
     );
   }
