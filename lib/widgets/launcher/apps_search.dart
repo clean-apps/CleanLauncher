@@ -91,9 +91,7 @@ class _AppsSearchState extends State<AppsSearchWidget> {
       itemBuilder: (context, index) {
         AppData appData = this.showApps.elementAt(index);
         return FlatButton(
-          onPressed: () {
-            DeviceApps.openApp(appData.packageName);
-          },
+          onPressed: () => DeviceApps.openApp(appData.packageName),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -116,10 +114,7 @@ class _AppsSearchState extends State<AppsSearchWidget> {
               child: _renderSearchBox(themeColor, highlightColor),
             )
           ],
-          icon: Icon(
-            Icons.search,
-            color: highlightColor,
-          ),
+          icon: Icon(Icons.search, color: highlightColor),
           indexedHeaderHeight: ((index) => 80),
         ),
       ],
