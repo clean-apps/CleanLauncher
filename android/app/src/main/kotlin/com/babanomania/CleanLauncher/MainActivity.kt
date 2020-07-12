@@ -1,4 +1,4 @@
-package com.example.CleanLauncher
+package com.babanomania.CleanLauncher
 
 import io.flutter.embedding.android.FlutterActivity
 
