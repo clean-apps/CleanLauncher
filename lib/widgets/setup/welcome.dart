@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeWidget extends StatelessWidget {
   @override
@@ -9,12 +8,12 @@ class WelcomeWidget extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.fromLTRB(0, 100, 0, 100),
-          child: SvgPicture.asset(
+          child: Image.asset(
             Theme.of(context).brightness == Brightness.dark
-                ? 'assets/feather.svg'
-                : 'assets/feather_black.svg',
-            height: 128,
-            width: 128,
+                ? 'assets/app-logo-dark.jpg'
+                : 'assets/app-logo-light.jpg',
+            height: 196,
+            width: 196,
           ),
         ),
         Text(
