@@ -60,4 +60,12 @@ limitations under the License.
 
 # Credits
 
-todo
+* Amazing Launcher Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
+* Logo Font Comfortaa made by Johan Aakerlund
+
+* <a href="https://pub.dev/packages/device_apps">device_apps</a>
+
+* <a href="https://pub.dev/packages/alphabet_list_scroll_view">alphabet_list_scroll_view</a>
+
+* The amazing <a href="https://mobx.js.org/README.html">mobx</a> library
