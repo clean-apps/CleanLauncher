@@ -3,7 +3,7 @@ description: A No-Distraction Android Launcher.
 
 publish_to: "none"
 
-version: 1.0.4+4
+version: 1.0.5+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -28,5 +28,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/app-logo-dark.jpg
-    - assets/app-logo-light.jpg
+    - assets/app-logo-dark.png
+    - assets/app-logo-light.png

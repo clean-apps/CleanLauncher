@@ -10,8 +10,8 @@ class WelcomeWidget extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(0, 100, 0, 100),
           child: Image.asset(
             Theme.of(context).brightness == Brightness.dark
-                ? 'assets/app-logo-dark.jpg'
-                : 'assets/app-logo-light.jpg',
+                ? 'assets/app-logo-dark.png'
+                : 'assets/app-logo-light.png',
             height: 196,
             width: 196,
           ),
