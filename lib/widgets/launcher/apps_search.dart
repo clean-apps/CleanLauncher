@@ -53,7 +53,7 @@ class _AppsSearchState extends State<AppsSearchWidget> {
           color: themeColor,
           decoration: TextDecoration.none,
         ),
-        autofocus: false,
+        autofocus: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: new BorderSide(color: highlightColor),

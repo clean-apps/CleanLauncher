@@ -1,3 +1,4 @@
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -14,6 +15,14 @@ final TaskList tasklist = StoreBuilder.tasks();
 class Preferences extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // ignore: non_constant_identifier_names
+    final int FLAGACTIVITYNEWTASK = 268435456;
+    AndroidIntent launcherIntent = AndroidIntent(
+      action: 'android.intent.action.MAIN',
+      category: 'android.intent.category.HOME',
+      flags: [FLAGACTIVITYNEWTASK],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Preferences'),
@@ -52,7 +61,10 @@ class Preferences extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Select Another Launcher'),
+            title: Text('Select Launcher'),
+            onTap: () async => {
+              await launcherIntent.launch(),
+            },
           )
         ],
       ),
