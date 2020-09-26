@@ -28,7 +28,8 @@ class SetupFavorites extends StatelessWidget {
         body: SelectAppsWidget(),
         floatingActionButton: appList.count > 0
             ? FloatingActionButton.extended(
-                onPressed: () => Navigator.pushNamed(context, '/launcher'),
+                onPressed: () =>
+                    Navigator.popAndPushNamed(context, '/launcher'),
                 label: Text('NEXT', style: TextStyle(color: highlightColor)),
                 icon: Icon(Icons.keyboard_arrow_right, color: highlightColor),
               )

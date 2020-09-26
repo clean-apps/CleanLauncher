@@ -42,13 +42,15 @@ class Preferences extends StatelessWidget {
             builder: (_) => SwitchListTile(
               title: Text('Use Dark Theme'),
               value: !settings.useLightTheme,
-              onChanged: (lightMode) => settings.setTheme(lightMode),
+              activeColor: Theme.of(context).textTheme.caption.color,
+              onChanged: (lightMode) => settings.setTheme(!lightMode),
             ),
           ),
           Observer(
             builder: (_) => SwitchListTile(
               title: Text('Use TODO List'),
               value: settings.useTodoList,
+              activeColor: Theme.of(context).textTheme.caption.color,
               onChanged: (useTodo) => settings.setTodoUsage(useTodo),
             ),
           ),
@@ -61,7 +63,7 @@ class Preferences extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Select Launcher'),
+            title: Text('Set Default Launcher'),
             onTap: () async => {
               await launcherIntent.launch(),
             },

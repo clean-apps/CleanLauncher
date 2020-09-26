@@ -7,7 +7,7 @@ class SetupWelcome extends StatelessWidget {
     return Scaffold(
       body: Center(child: WelcomeWidget()),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.pushNamed(context, '/favorites'),
+        onPressed: () => Navigator.popAndPushNamed(context, '/favorites'),
         label: Text('NEXT'),
         icon: Icon(Icons.keyboard_arrow_right),
       ),
