@@ -43,6 +43,23 @@ mixin _$Settings on _Settings, Store {
     }, _$useTodoListAtom, name: '${_$useTodoListAtom.name}_set');
   }
 
+  final _$useSmallFontAtom = Atom(name: '_Settings.useSmallFont');
+
+  @override
+  bool get useSmallFont {
+    _$useSmallFontAtom.context.enforceReadPolicy(_$useSmallFontAtom);
+    _$useSmallFontAtom.reportObserved();
+    return super.useSmallFont;
+  }
+
+  @override
+  set useSmallFont(bool value) {
+    _$useSmallFontAtom.context.conditionallyRunInAction(() {
+      super.useSmallFont = value;
+      _$useSmallFontAtom.reportChanged();
+    }, _$useSmallFontAtom, name: '${_$useSmallFontAtom.name}_set');
+  }
+
   final _$initStoreAsyncAction = AsyncAction('initStore');
 
   @override
@@ -62,5 +79,13 @@ mixin _$Settings on _Settings, Store {
   @override
   Future<void> setTodoUsage(bool useTodo) {
     return _$setTodoUsageAsyncAction.run(() => super.setTodoUsage(useTodo));
+  }
+
+  final _$setSmallFontAsyncAction = AsyncAction('setSmallFont');
+
+  @override
+  Future<void> setSmallFont(bool pUseSmallFont) {
+    return _$setSmallFontAsyncAction
+        .run(() => super.setSmallFont(pUseSmallFont));
   }
 }

@@ -15,6 +15,9 @@ abstract class _Settings with Store {
   @observable
   bool useTodoList = true;
 
+  @observable
+  bool useSmallFont = false;
+
   @action
   Future<void> initStore() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -40,5 +43,13 @@ abstract class _Settings with Store {
 
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setBool("use_todo_list", this.useTodoList);
+  }
+
+  @action
+  Future<void> setSmallFont(bool pUseSmallFont) async {
+    this.useSmallFont = pUseSmallFont;
+
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setBool("use_small_font", this.useSmallFont);
   }
 }

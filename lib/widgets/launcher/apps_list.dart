@@ -1,4 +1,5 @@
 import 'package:CleanLauncher/stores/models/appdata.dart';
+import 'package:CleanLauncher/stores/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 
@@ -6,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:CleanLauncher/stores/StoreBuilder.dart';
 import 'package:CleanLauncher/stores/applist.dart';
 
+final Settings settings = StoreBuilder.settings();
 final AppList appList = StoreBuilder.favorites();
 
 class AppsListWidget extends StatelessWidget {
@@ -131,9 +133,13 @@ class AppsListWidget extends StatelessWidget {
                   softWrap: false,
                   overflow: TextOverflow.fade,
                   style: Theme.of(context).textTheme.headline3.copyWith(
-                      color: appList.highlightedIndex == index
-                          ? highlightColor
-                          : normalColor),
+                        color: appList.highlightedIndex == index
+                            ? highlightColor
+                            : normalColor,
+                        fontSize: settings.useSmallFont
+                            ? Theme.of(context).textTheme.headline4.fontSize
+                            : Theme.of(context).textTheme.headline2.fontSize,
+                      ),
                 ),
               ),
             ),

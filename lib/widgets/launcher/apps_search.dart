@@ -1,7 +1,11 @@
+import 'package:CleanLauncher/stores/StoreBuilder.dart';
+import 'package:CleanLauncher/stores/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:CleanLauncher/stores/models/appdata.dart';
 import 'package:alphabet_list_scroll_view/alphabet_list_scroll_view.dart';
+
+final Settings settings = StoreBuilder.settings();
 
 class AppsSearchWidget extends StatefulWidget {
   final List<AppData> apps;
@@ -95,7 +99,11 @@ class _AppsSearchState extends State<AppsSearchWidget> {
             alignment: Alignment.centerLeft,
             child: Text(
               appData.appName,
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.headline3.copyWith(
+                    fontSize: settings.useSmallFont
+                        ? Theme.of(context).textTheme.headline4.fontSize
+                        : Theme.of(context).textTheme.headline2.fontSize,
+                  ),
               softWrap: false,
               overflow: TextOverflow.fade,
             ),

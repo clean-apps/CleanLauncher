@@ -54,6 +54,15 @@ class Preferences extends StatelessWidget {
               onChanged: (useTodo) => settings.setTodoUsage(useTodo),
             ),
           ),
+          Observer(
+            builder: (_) => SwitchListTile(
+              title: Text('Use Small Font'),
+              subtitle: Text('in application names'),
+              value: settings.useSmallFont,
+              activeColor: Theme.of(context).textTheme.caption.color,
+              onChanged: (useSmallFont) => settings.setSmallFont(useSmallFont),
+            ),
+          ),
           ListTile(
             title: Text('Reset All Data'),
             onTap: () async => {
